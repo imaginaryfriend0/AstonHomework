@@ -71,7 +71,11 @@ public class Main {
     public static void swapArrayValues() {
         int[] array = {1, 1, 1, 0, 0, 0, 1, 0};
         for (int i = 0; i < array.length; i++) {
-            array[i] = (array[i] == 1) ? 0 : 1;
+            if (array[i] == 1) {
+                array[i] = 0;
+            } else {
+                array[i] = 1;
+            }
         }
         System.out.println(Arrays.toString(array));
     }
@@ -87,16 +91,20 @@ public class Main {
     public static void alterArray() {
         int[] array = {1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
         for (int i = 0; i < array.length; i++) {
-            if (array[i] < 6) array[i] *= 2;
+            if (array[i] < 6) {
+                array[i] *= 2;
+            }
         }
         System.out.println(Arrays.toString(array));
     }
 
     public static void alterArrayDiagonals() {
-        int[][] array = {{4, 5, 6, 7},
+        int[][] array = {
+                {4, 5, 6, 7},
                 {8, 9, 5, 5},
                 {9, 4, 5, 7},
-                {8, 8, 8, 8}};
+                {8, 8, 8, 8}
+        };
 
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
