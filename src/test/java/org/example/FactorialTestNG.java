@@ -2,6 +2,7 @@ package org.example;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import static org.testng.Assert.assertEquals;
 import static org.example.Main.factorial;
 
@@ -14,7 +15,7 @@ public class FactorialTestNG {
 
     @DataProvider(name = "factorialData")
     public Object[][] factorialData() {
-        return new Object[][] {
+        return new Object[][]{
                 {1, 1},
                 {2, 2},
                 {3, 6},
