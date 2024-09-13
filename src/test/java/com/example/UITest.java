@@ -15,8 +15,8 @@ import java.time.Duration;
 
 public class UITest {
     @Test
-    public void Test(){
-        System.setProperty("webdriver.firefox.driver","C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+    public void Test() {
+        System.setProperty("webdriver.firefox.driver", "C:\\Program Files\\Mozilla Firefox\\firefox.exe");
         WebDriver driver = new FirefoxDriver();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
@@ -25,13 +25,13 @@ public class UITest {
 
         //Проверяем, что форма существует и отображается
         WebElement form = driver.findElement(By.xpath("//div[@class='pay__wrapper']"));
-        Assertions.assertNotNull(form,"Форма не была найдена");
-        Assertions.assertTrue(form.isDisplayed(),"Форма не отображается");
+        Assertions.assertNotNull(form, "Форма не была найдена");
+        Assertions.assertTrue(form.isDisplayed(), "Форма не отображается");
 
         //Проверяем, что логотипы платежных систем существуют и отображаются
         WebElement payPartners = driver.findElement(By.xpath("//div[@class='pay__partners']"));
-        Assertions.assertNotNull(payPartners,"Логотипы не были найдены");
-        Assertions.assertTrue(payPartners.isDisplayed(),"Логотипы платежных систем не отображаются");
+        Assertions.assertNotNull(payPartners, "Логотипы не были найдены");
+        Assertions.assertTrue(payPartners.isDisplayed(), "Логотипы платежных систем не отображаются");
 
         //Проверяем, что по нажатию на гиперссылку происходит переход
         String currentUrl = driver.getCurrentUrl();
@@ -39,7 +39,7 @@ public class UITest {
         helpLink.click();
 
         String newUrl = driver.getCurrentUrl();
-        Assertions.assertNotEquals(currentUrl,newUrl,"Ссылка не изменилась");
+        Assertions.assertNotEquals(currentUrl, newUrl, "Ссылка не изменилась");
         Assertions.assertTrue(newUrl.contains("/help/poryadok-oplaty-i-bezopasnost-internet-platezhey/"));
 
         //Возвращаемся на предыдущую страницу
@@ -59,12 +59,12 @@ public class UITest {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='bepaid-app']")));
         WebElement popup = driver.findElement(By.xpath("//div[@class='bepaid-app']"));
-        Assertions.assertTrue(popup.isDisplayed(),"При нажатии кнопки не высвечивается попап оплаты");
+        Assertions.assertTrue(popup.isDisplayed(), "При нажатии кнопки не высвечивается попап оплаты");
 
         driver.quit();
     }
 
-    public void killTheCookie(WebDriverWait waitDriver){
+    public void killTheCookie(WebDriverWait waitDriver) {
         //Закрываем попап с куки
         try {
             WebElement cookie = waitDriver.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@id='cookie-agree']")));
