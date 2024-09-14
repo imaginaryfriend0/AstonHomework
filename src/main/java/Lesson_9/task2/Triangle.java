@@ -1,4 +1,4 @@
-package task2;
+package Lesson_9.task2;
 
 public class Triangle implements Figure, Colorable {
     private double a;

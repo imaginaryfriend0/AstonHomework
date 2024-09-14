@@ -1,6 +1,7 @@
-package task1;
+package Lesson_9.task1;
 
 public class Cat extends Animal {
+    static int catCount;
     private String name;
     private int appetite;
     private boolean isHungry;
@@ -9,24 +10,29 @@ public class Cat extends Animal {
         this.name = name;
         this.appetite = appetite;
         this.isHungry = true;
+        catCount++;
     }
 
     public Cat() {
         catCount++;
     }
 
+    public static void getCats() {
+        System.out.println("Cats total: " + catCount + ".");
+    }
+
     @Override
     public void run(double distance) {
         if (distance > 200) {
-            System.out.println("Коты не бегают дальше 200 м.");
+            System.out.println("Cats don't run further than 200m.");
         } else {
-            System.out.println("Кот пробежал " + distance + " м.");
+            System.out.println("Cat ran: " + distance + "m.");
         }
     }
 
     @Override
     public void swim(double distance) {
-        System.out.println("Коты не плавают.");
+        System.out.println("Cats don't swim.");
     }
 
     public void eat(Bowl bowl) {
@@ -34,12 +40,12 @@ public class Cat extends Animal {
             if (bowl.getFood() >= appetite) {
                 bowl.decreaseFood(appetite);
                 isHungry = false;
-                System.out.println(name + " покушал и теперь сыт.");
+                System.out.println(name + " ate and is now full");
             } else {
-                System.out.println(name + " не смог покушать, в миске недостаточно еды.");
+                System.out.println(name + " couldn't eat - not enough food in the bowl");
             }
         } else {
-            System.out.println(name + " уже сыт.");
+            System.out.println(name + " is already full.");
         }
     }
 

@@ -1,4 +1,4 @@
-package task1;
+package Lesson_9.task1;
 
 public class Bowl {
     private int food;
@@ -15,7 +15,7 @@ public class Bowl {
 
     public void addFood(int amount) {
         food += amount;
-        System.out.println("В миску добавлено " + amount + " единиц еды.");
+        System.out.println(amount + " units of food were added to the bowl");
     }
 
     public int getFood() {

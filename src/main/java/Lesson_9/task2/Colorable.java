@@ -1,4 +1,4 @@
-package task2;
+package Lesson_9.task2;
 
 public interface Colorable {
     void setBorderColor(String color);

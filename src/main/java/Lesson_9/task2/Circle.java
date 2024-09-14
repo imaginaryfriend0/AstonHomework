@@ -1,29 +1,29 @@
-package task2;
+package Lesson_9.task2;
 
-public class Rectangle implements Figure, Colorable {
-    private double a;
-    private double b;
+import static java.lang.Math.PI;
+
+public class Circle implements Figure, Colorable {
+    private double radius;
     private String borderColor;
     private String fillColor;
 
-    public Rectangle(double a, double b) {
-        this.a = a;
-        this.b = b;
+    public Circle(double radius) {
+        this.radius = radius;
     }
 
     @Override
     public double calculatePerimeter() {
-        return 2 * (a + b);
+        return 2 * PI * radius;
     }
 
     @Override
     public double calculateArea() {
-        return a * b;
+        return PI * radius * radius;
     }
 
     @Override
-    public void setBorderColor(String color) {
-        this.borderColor = color;
+    public void setBorderColor(String borderColor) {
+        this.borderColor = borderColor;
     }
 
     @Override
