@@ -1,3 +1,5 @@
+package Lesson_10;
+
 public class MyArrayDataException extends Exception {
     int row;
     int col;
