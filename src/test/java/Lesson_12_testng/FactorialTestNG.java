@@ -1,10 +1,10 @@
-package org.example;
+package Lesson_12_testng;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
-import static org.example.Main.factorial;
+import static Lesson_12_testng.Main.factorial;
 
 public class FactorialTestNG {
 

@@ -1,8 +1,8 @@
-package org.example;
+package Lesson_12_testng;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(factorial(1));
+        System.out.println(factorial(10));
     }
 
     public static int factorial(int number) {
