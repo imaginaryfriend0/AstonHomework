@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.Arrays;
-
 public class UITest {
     private String phone = "297777777";
     private String sum = "100";
@@ -30,10 +28,29 @@ public class UITest {
         Assertions.assertTrue(page.isPayPartnersDisplayed(), "Логотипы платежных систем не отображаются");
 
         // Проверяем работу выбора опций
-        page.selectInternetOption();
-        page.selectInstalmentOption();
-        page.selectArrearsOption();
-        page.selectConnectionOption();
+        //Домашний интернет
+        String[] internet = page.selectInternetOption();
+        Assertions.assertEquals(internet[0], "Номер абонента", "Плейсхолдер номера абонента слетел");
+        Assertions.assertEquals(internet[1], "Сумма", "Плейсхолдер суммы слетел");
+        Assertions.assertEquals(internet[2], "E-mail для отправки чека", "Плейсхолдер мыла слетел");
+
+        //Рассрочка
+        String[] instalment = page.selectInstalmentOption();
+        Assertions.assertEquals(instalment[0], "Номер счета на 44", "Плейсхолдер номера счета слетел");
+        Assertions.assertEquals(instalment[1], "Сумма", "Плейсхолдер суммы слетел");
+        Assertions.assertEquals(instalment[2], "E-mail для отправки чека", "Плейсхолдер мыла слетел");
+
+        //Задолженность
+        String[] arrears = page.selectArrearsOption();
+        Assertions.assertEquals(arrears[0], "Номер счета на 2073", "Плейсхолдер номера счета слетел");
+        Assertions.assertEquals(arrears[1], "Сумма", "Плейсхолдер суммы слетел");
+        Assertions.assertEquals(arrears[2], "E-mail для отправки чека", "Плейсхолдер мыла слетел");
+
+        //Услуги связи
+        String[] connection = page.selectConnectionOption();
+        Assertions.assertEquals(connection[0], "Номер телефона", "Плейсхолдер номера телефона слетел");
+        Assertions.assertEquals(connection[1], "Сумма", "Плейсхолдер суммы слетел");
+        Assertions.assertEquals(connection[2], "E-mail для отправки чека", "Плейсхолдер мыла слетел");
 
         // Проверяем, что по нажатию на гиперссылку происходит переход
         String currentUrl = driver.getCurrentUrl();
@@ -53,11 +70,9 @@ public class UITest {
 
         //Проверка отображения ввода данных на попапе
         String[] webElements = page.initPopupValues();
-        System.out.println(Arrays.toString(webElements));
         String actualSum = webElements[1].split(" ")[0].split("\\.")[0];
         String actualButtonValue = webElements[2].substring(9, 12);
         String actualPhone = webElements[0].substring(30);
-        System.out.println(actualButtonValue);
 
         Assertions.assertEquals(actualSum, sum, "Сумма неверна");
         Assertions.assertEquals(actualPhone, phone, "Телефон неверен");

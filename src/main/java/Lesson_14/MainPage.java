@@ -121,14 +121,13 @@ public class MainPage {
     }
 
     public String[] initPopupValues() {
-        // Ожидаем появления элементов на странице
         driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@class='bepaid-iframe']")));
 
         popupPhoneNumber = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'Номер:')]")));
         popupSum = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'BYN')]")));
         buttonValue = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Оплатить')]")));
 
-        String[] asd = new String[3];// Извлекаем текст элементов
+        String[] asd = new String[3];
         asd[0] = popupPhoneNumber.getText();
         asd[1] = popupSum.getText();
         asd[2] = buttonValue.getText();
@@ -155,31 +154,70 @@ public class MainPage {
         return placeholders;
     }
 
-    public void selectConnectionOption() {
+    public String[] selectConnectionOption() {
         openSelect();
         scrollToElement(connectionOption);
         wait.until(ExpectedConditions.visibilityOf(connectionOption));
         clickElementWithJS(connectionOption);
+
+        String[] conFields = new String[3];
+        conFields[0] = phoneField.getAttribute("placeholder");
+        conFields[1] = sumField.getAttribute("placeholder");
+        conFields[2] = emailField.getAttribute("placeholder");
+        return conFields;
     }
 
-    public void selectInternetOption() {
+    public String[] selectInternetOption() {
         openSelect();
         scrollToElement(internetOption);
         wait.until(ExpectedConditions.visibilityOf(internetOption));
         clickElementWithJS(internetOption);
+
+        WebElement intPhoneField = driver.findElement(By.xpath("//input[@id='internet-phone']"));
+        WebElement intSumField = driver.findElement(By.xpath("//input[@id='internet-sum']"));
+        WebElement intEmailField = driver.findElement(By.xpath("//input[@id='internet-email']"));
+
+        String[] intFields = new String[3];
+        intFields[0] = intPhoneField.getAttribute("placeholder");
+        intFields[1] = intSumField.getAttribute("placeholder");
+        intFields[2] = intEmailField.getAttribute("placeholder");
+
+        return intFields;
     }
 
-    public void selectInstalmentOption() {
+    public String[] selectInstalmentOption() {
         openSelect();
         scrollToElement(instalmentOption);
         wait.until(ExpectedConditions.visibilityOf(instalmentOption));
         clickElementWithJS(instalmentOption);
+
+        WebElement instPhoneField = driver.findElement(By.xpath("//input[@id='score-instalment']"));
+        WebElement instSumField = driver.findElement(By.xpath("//input[@id='instalment-sum']"));
+        WebElement instEmailField = driver.findElement(By.xpath("//input[@id='instalment-email']"));
+
+        String[] instFields = new String[3];
+        instFields[0] = instPhoneField.getAttribute("placeholder");
+        instFields[1] = instSumField.getAttribute("placeholder");
+        instFields[2] = instEmailField.getAttribute("placeholder");
+
+        return instFields;
     }
 
-    public void selectArrearsOption() {
+    public String[] selectArrearsOption() {
         openSelect();
         scrollToElement(arrearsOption);
         wait.until(ExpectedConditions.visibilityOf(arrearsOption));
         clickElementWithJS(arrearsOption);
+
+        WebElement arrPhoneField = driver.findElement(By.xpath("//input[@id='score-arrears']"));
+        WebElement arrSumField = driver.findElement(By.xpath("//input[@id='arrears-sum']"));
+        WebElement arrEmailField = driver.findElement(By.xpath("//input[@id='arrears-email']"));
+
+        String[] arrFields = new String[3];
+        arrFields[0] = arrPhoneField.getAttribute("placeholder");
+        arrFields[1] = arrSumField.getAttribute("placeholder");
+        arrFields[2] = arrEmailField.getAttribute("placeholder");
+
+        return arrFields;
     }
 }
