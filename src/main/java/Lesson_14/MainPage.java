@@ -62,6 +62,8 @@ public class MainPage {
 
     private WebElement popupPhoneNumber;
 
+    private WebElement buttonValue;
+
     public MainPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(3));
@@ -121,15 +123,36 @@ public class MainPage {
     public String[] initPopupValues() {
         // Ожидаем появления элементов на странице
         driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@class='bepaid-iframe']")));
-        popupPhoneNumber = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(.,'Номер:')]")));
-        popupSum = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(.,'BYN')]")));
 
-        // Возвращаем текст элементов
-        String[] popupValues = new String[2];
-        popupValues[0] = popupPhoneNumber.getText();
-        popupValues[1] = popupSum.getText();
+        popupPhoneNumber = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'Номер:')]")));
+        popupSum = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'BYN')]")));
+        buttonValue = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Оплатить')]")));
 
-        return popupValues;
+        String[] asd = new String[3];// Извлекаем текст элементов
+        asd[0] = popupPhoneNumber.getText();
+        asd[1] = popupSum.getText();
+        asd[2] = buttonValue.getText();
+        return asd;
+    }
+
+    public boolean areCardsDisplayedPopup() {
+        WebElement cards = driver.findElement(By.xpath("//div[@class='cards-brands cards-brands__container ng-tns-c61-0 ng-trigger ng-trigger-brandsState ng-star-inserted']"));
+        return cards.isDisplayed();
+    }
+
+    public String[] getPopupFieldsPlaceholders() {
+        WebElement cardNumber = driver.findElement(By.xpath("//div[@class='content ng-tns-c46-1']/label"));
+        WebElement cardDate = driver.findElement(By.xpath("//div[@class='content ng-tns-c46-4']/label"));
+        WebElement cardCvc = driver.findElement(By.xpath("//div[@class='content ng-tns-c46-5']/label"));
+        WebElement cardHolderName = driver.findElement(By.xpath("//div[@class='content ng-tns-c46-3']/label"));
+
+        String[] placeholders = new String[4];
+        placeholders[0] = cardNumber.getText();
+        placeholders[1] = cardDate.getText();
+        placeholders[2] = cardCvc.getText();
+        placeholders[3] = cardHolderName.getText();
+
+        return placeholders;
     }
 
     public void selectConnectionOption() {
