@@ -1,4 +1,4 @@
-package Lesson_14;
+package Lesson_16;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainPage {
     private WebDriver driver;
@@ -37,9 +39,6 @@ public class MainPage {
     @FindBy(xpath = "//form[@id='pay-connection']//button")
     private WebElement continueButton;
 
-    @FindBy(xpath = "//div[@class='bepaid-app']")
-    private WebElement popup;
-
     @FindBy(css = ".select__header")
     private WebElement selectHeader;
 
@@ -57,12 +56,6 @@ public class MainPage {
 
     @FindBy(xpath = "//div[@id='pay-section']")
     private WebElement paySection;
-
-    private WebElement popupSum;
-
-    private WebElement popupPhoneNumber;
-
-    private WebElement buttonValue;
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -85,7 +78,19 @@ public class MainPage {
     }
 
     public boolean isPayPartnersDisplayed() {
-        return payPartners.isDisplayed();
+        List<WebElement> images = payPartners.findElements(By.tagName("img"));
+
+        if (images.size() != 5) {
+            return false;
+        }
+
+        for (WebElement image : images) {
+            if (!image.isDisplayed()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void clickHelpLink() {
@@ -102,11 +107,6 @@ public class MainPage {
         continueButton.click();
     }
 
-    public boolean isPopupDisplayed() {
-        wait.until(ExpectedConditions.visibilityOf(popup));
-        return popup.isDisplayed();
-    }
-
     private void openSelect() {
         scrollToElement(paySection);
         wait.until(ExpectedConditions.elementToBeClickable(selectHeader)).click();
@@ -120,54 +120,20 @@ public class MainPage {
         jsExecutor.executeScript("arguments[0].click();", element);
     }
 
-    public String[] initPopupValues() {
-        driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@class='bepaid-iframe']")));
-
-        popupPhoneNumber = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'Номер:')]")));
-        popupSum = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,'BYN')]")));
-        buttonValue = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Оплатить')]")));
-
-        String[] asd = new String[3];
-        asd[0] = popupPhoneNumber.getText();
-        asd[1] = popupSum.getText();
-        asd[2] = buttonValue.getText();
-        return asd;
-    }
-
-    public boolean areCardsDisplayedPopup() {
-        WebElement cards = driver.findElement(By.xpath("//div[@class='cards-brands cards-brands__container ng-tns-c61-0 ng-trigger ng-trigger-brandsState ng-star-inserted']"));
-        return cards.isDisplayed();
-    }
-
-    public String[] getPopupFieldsPlaceholders() {
-        WebElement cardNumber = driver.findElement(By.xpath("//div[@class='content ng-tns-c46-1']/label"));
-        WebElement cardDate = driver.findElement(By.xpath("//div[@class='content ng-tns-c46-4']/label"));
-        WebElement cardCvc = driver.findElement(By.xpath("//div[@class='content ng-tns-c46-5']/label"));
-        WebElement cardHolderName = driver.findElement(By.xpath("//div[@class='content ng-tns-c46-3']/label"));
-
-        String[] placeholders = new String[4];
-        placeholders[0] = cardNumber.getText();
-        placeholders[1] = cardDate.getText();
-        placeholders[2] = cardCvc.getText();
-        placeholders[3] = cardHolderName.getText();
-
-        return placeholders;
-    }
-
-    public String[] selectConnectionOption() {
+    public List<String> selectConnectionOption() {
         openSelect();
         scrollToElement(connectionOption);
         wait.until(ExpectedConditions.visibilityOf(connectionOption));
         clickElementWithJS(connectionOption);
 
-        String[] conFields = new String[3];
-        conFields[0] = phoneField.getAttribute("placeholder");
-        conFields[1] = sumField.getAttribute("placeholder");
-        conFields[2] = emailField.getAttribute("placeholder");
+        List<String> conFields = new ArrayList<>();
+        conFields.add(phoneField.getAttribute("placeholder"));
+        conFields.add(sumField.getAttribute("placeholder"));
+        conFields.add(emailField.getAttribute("placeholder"));
         return conFields;
     }
 
-    public String[] selectInternetOption() {
+    public List<String> selectInternetOption() {
         openSelect();
         scrollToElement(internetOption);
         wait.until(ExpectedConditions.visibilityOf(internetOption));
@@ -177,15 +143,15 @@ public class MainPage {
         WebElement intSumField = driver.findElement(By.xpath("//input[@id='internet-sum']"));
         WebElement intEmailField = driver.findElement(By.xpath("//input[@id='internet-email']"));
 
-        String[] intFields = new String[3];
-        intFields[0] = intPhoneField.getAttribute("placeholder");
-        intFields[1] = intSumField.getAttribute("placeholder");
-        intFields[2] = intEmailField.getAttribute("placeholder");
+        List<String> intFields = new ArrayList<>();
+        intFields.add(intPhoneField.getAttribute("placeholder"));
+        intFields.add(intSumField.getAttribute("placeholder"));
+        intFields.add(intEmailField.getAttribute("placeholder"));
 
         return intFields;
     }
 
-    public String[] selectInstalmentOption() {
+    public List<String> selectInstalmentOption() {
         openSelect();
         scrollToElement(instalmentOption);
         wait.until(ExpectedConditions.visibilityOf(instalmentOption));
@@ -195,15 +161,15 @@ public class MainPage {
         WebElement instSumField = driver.findElement(By.xpath("//input[@id='instalment-sum']"));
         WebElement instEmailField = driver.findElement(By.xpath("//input[@id='instalment-email']"));
 
-        String[] instFields = new String[3];
-        instFields[0] = instPhoneField.getAttribute("placeholder");
-        instFields[1] = instSumField.getAttribute("placeholder");
-        instFields[2] = instEmailField.getAttribute("placeholder");
+        List<String> instFields = new ArrayList<>();
+        instFields.add(instPhoneField.getAttribute("placeholder"));
+        instFields.add(instSumField.getAttribute("placeholder"));
+        instFields.add(instEmailField.getAttribute("placeholder"));
 
         return instFields;
     }
 
-    public String[] selectArrearsOption() {
+    public List<String> selectArrearsOption() {
         openSelect();
         scrollToElement(arrearsOption);
         wait.until(ExpectedConditions.visibilityOf(arrearsOption));
@@ -213,10 +179,10 @@ public class MainPage {
         WebElement arrSumField = driver.findElement(By.xpath("//input[@id='arrears-sum']"));
         WebElement arrEmailField = driver.findElement(By.xpath("//input[@id='arrears-email']"));
 
-        String[] arrFields = new String[3];
-        arrFields[0] = arrPhoneField.getAttribute("placeholder");
-        arrFields[1] = arrSumField.getAttribute("placeholder");
-        arrFields[2] = arrEmailField.getAttribute("placeholder");
+        List<String> arrFields = new ArrayList<>();
+        arrFields.add(arrPhoneField.getAttribute("placeholder"));
+        arrFields.add(arrSumField.getAttribute("placeholder"));
+        arrFields.add(arrEmailField.getAttribute("placeholder"));
 
         return arrFields;
     }
